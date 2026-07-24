@@ -5,20 +5,8 @@ Private Cloud Lab
 
 Architecture:
 
-                  Internet
-                     │
-             NAT (VirtualBox)
-                     │
-             eth0 (gateway)
-                     │
-               +-------------+
-               |   gateway   |
-               +-------------+
-             eth1    │ 
-        -------------------------------
-        |                             |
- 10.10.10.11                    10.10.10.12
-   compute                         storage
+<img width="383" height="272" alt="image" src="https://github.com/user-attachments/assets/8fd024d4-3175-467c-bf9a-93b00f5e8ecf" />
+
 
 
 Installation
