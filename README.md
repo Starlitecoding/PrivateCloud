@@ -3,7 +3,23 @@
 
 Private Cloud Lab
 
-Architecture
+Architecture:
+
+                  Internet
+                     │
+             NAT (VirtualBox)
+                     │
+             eth0 (gateway)
+                     │
+               +-------------+
+               |   gateway   |
+               +-------------+
+             eth1    │ 
+        -------------------------------
+        |                             |
+ 10.10.10.11                    10.10.10.12
+   compute                         storage
+
 
 Installation
 
