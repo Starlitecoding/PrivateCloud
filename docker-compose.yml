@@ -1,0 +1,46 @@
+networks:
+  wan-net:
+    driver: bridge
+  lan-net:
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 10.10.10.0/24
+
+services:
+  mock-internet:
+    image: nginx:alpine
+    networks:
+      - wan-net
+    volumes:
+      - ./gateway/mock-index.html:/usr/share/nginx/html/index.html:ro
+
+  gateway:
+    build: ./gateway
+    cap_add:
+      - NET_ADMIN
+    sysctls:
+      - net.ipv4.ip_forward=1
+    networks:
+      wan-net: {}
+      lan-net:
+        ipv4_address: 10.10.10.2
+
+  compute:
+    build: ./compute
+    command: sh -c "apk add --no-cache curl iproute2 iputils && sleep infinity"
+    cap_add:
+      - NET_ADMIN
+    networks:
+      lan-net:
+        ipv4_address: 10.10.10.11
+
+  storage:
+    image: alpine:3.19
+    command: sh -c "apk add --no-cache curl iproute2 iputils && sleep infinity"
+    cap_add:
+      - NET_ADMIN
+    networks:
+      lan-net:
+        ipv4_address: 10.10.10.12
