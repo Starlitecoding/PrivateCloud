@@ -3,7 +3,6 @@ networks:
     driver: bridge
   lan-net:
     driver: bridge
-    internal: true
     ipam:
       config:
         - subnet: 10.10.10.0/24
