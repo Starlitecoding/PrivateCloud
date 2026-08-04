@@ -37,17 +37,17 @@ services:
 
 
   nginx:
-    image: nginx:alpine
-    ports: 
-      - 8080:80
-    volumes:
-      - ./compute/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-    networks:
-       lan-net:
+   image: nginx:alpine
+   ports:
+    - "9999:80"
+   volumes:
+    - ./compute/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+   depends_on:
+    - app1
+    - app2
+   networks:
+     lan-net:
         ipv4_address: 10.10.10.19
-    depends_on:
-      - app1
-      - app2
 
   app1:
     image: hashicorp/http-echo  
@@ -66,6 +66,7 @@ services:
 
 
   storage:
+    privileged: true
     build: ./storage
     cap_add:
       - NET_ADMIN

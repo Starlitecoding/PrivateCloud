@@ -4,6 +4,15 @@ RUN apk add --no-cache \
     curl \
     iproute2 \
     iputils \
-    bash
+    bash \
+    nfs-utils
 
-CMD ["sleep", "infinity"]
+RUN mkdir -p /data
+
+
+COPY exports /etc/exports 
+COPY entrypoint_stor.sh /entrypoint_stor.sh
+
+RUN chmod +x /entrypoint_stor.sh
+
+ENTRYPOINT [ "/entrypoint_stor.sh" ]
