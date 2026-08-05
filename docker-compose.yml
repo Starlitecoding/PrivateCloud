@@ -66,10 +66,17 @@ services:
 
 
   storage:
-    privileged: true
-    build: ./storage
+    # privileged: true
+    image: erichough/nfs-server
+
     cap_add:
-      - NET_ADMIN
+      - SYS_ADMIN
     networks:
       lan-net:
         ipv4_address: 10.10.10.12
+    volumes:
+      - ./storage/exports:/etc/exports:ro
+      - nfs-data:/data
+
+volumes:
+  nfs-data:

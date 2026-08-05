@@ -1,11 +1,11 @@
-#!/bin/sh
-exportfs -a
+# #!/bin/sh
+# exportfs -a
 
-rpcbind
+# rpcbind
 
-rpc.mountd
+# rpc.mountd
 
-rpc.nfsd 
+# rpc.nfsd 
 
 
-tail -f /dev/null
+# tail -f /dev/null

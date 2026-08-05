@@ -1,18 +1,15 @@
-FROM alpine:3.19
+# FROM erichough/nfs-server
 
-RUN apk add --no-cache \
-    curl \
-    iproute2 \
-    iputils \
-    bash \
-    nfs-utils
+# COPY exports /etc/exports
 
-RUN mkdir -p /data
+# RUN apk add --no-cache \
+#     curl \
+#     iproute2 \
+#     iputils \
+#     bash \
+#     nfs-utils
+
+# RUN mkdir -p /data
 
 
-COPY exports /etc/exports 
-COPY entrypoint_stor.sh /entrypoint_stor.sh
 
-RUN chmod +x /entrypoint_stor.sh
-
-ENTRYPOINT [ "/entrypoint_stor.sh" ]
