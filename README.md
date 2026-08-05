@@ -17,6 +17,15 @@ Screenshots
 Network Diagram
 
 Storage Layer
+Ручная настройка NFS подготовлена. Полный запуск rpc.nfsd требует поддержки NFS Server в ядре Linux, которая отсутствует в моем окружении Docker Desktop + WSL2.
+
+- Manual NFS configuration
+- exports
+- rpcbind
+- rpc.mountd
+- exportfs
+- NFS server requires kernel support (rpc.nfsd)
+
 
 Monitoring
 
