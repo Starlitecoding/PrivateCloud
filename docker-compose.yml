@@ -25,7 +25,7 @@ services:
     networks:
       wan-net: {}
       lan-net:
-        ipv4_address: 10.10.10.2
+        ipv4_address: 10.10.10.3
 
   # compute:
   #   build: ./compute
@@ -65,6 +65,26 @@ services:
           ipv4_address: 10.10.10.22
 
 
+  kopia-backup:
+    image: kopia/kopia:latest
+    container_name: kopia
+    restart: unless-stopped
+    command:
+      - server
+      - start
+      - --address=0.0.0.0:51515
+      - --insecure
+      - --server-username=admin
+      - --server-password=123123123
+    ports:
+      - "51515:51515"
+    volumes:
+      - kopia-config:/app/config
+      - kopia-cache:/app/cache
+      - kopia-logs:/app/logs
+    networks:
+      - lan-net
+
   storage:
     image: minio/minio
     command: minio server /data --console-address :9001
@@ -84,6 +104,9 @@ services:
 
 volumes:
   minio-data:
+  kopia-config:
+  kopia-cache:
+  kopia-logs:
 
 
 
