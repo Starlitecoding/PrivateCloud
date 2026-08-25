@@ -69,6 +69,8 @@ services:
     image: kopia/kopia:latest
     container_name: kopia
     restart: unless-stopped
+    environment:
+      KOPIA_PASSWORD: "123123123" 
     command:
       - server
       - start
@@ -82,6 +84,7 @@ services:
       - kopia-config:/app/config
       - kopia-cache:/app/cache
       - kopia-logs:/app/logs
+      - backup-data:/backup-data
     networks:
       - lan-net
 
@@ -107,7 +110,7 @@ volumes:
   kopia-config:
   kopia-cache:
   kopia-logs:
-
+  backup-data:
 
 
 
