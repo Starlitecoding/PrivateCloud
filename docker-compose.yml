@@ -104,6 +104,42 @@ services:
       - 9001:9001
     volumes:
       - minio-data:/data
+    
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    networks:
+      lan-net:
+        ipv4_address: 10.10.10.30
+    ports:
+      - "8081:8080"
+
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    networks:
+      lan-net:
+        ipv4_address: 10.10.10.31
+    ports:
+      - "9090:9090"
+    depends_on:
+      - cadvisor
+
+
+  grafana:
+    image: grafana/grafana:latest
+    volumes:
+    - grafana-data:/var/lib/grafana
+    networks:
+      lan-net:
+        ipv4_address: 10.10.10.32
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
 
 volumes:
   minio-data:
@@ -111,6 +147,8 @@ volumes:
   kopia-cache:
   kopia-logs:
   backup-data:
+  prometheus-data:
+  grafana-data:
 
 
 
