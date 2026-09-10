@@ -1,32 +1,84 @@
-# PrivateCloud
+# PrivateCloud — Infrastructure & DevOps Lab
 
-Private Cloud Lab
+## Architecture
 
-Architecture:
+Docker Compose based private cloud lab demonstrating:
 
-<img width="383" height="272" alt="image" src="https://github.com/user-attachments/assets/8fd024d4-3175-467c-bf9a-93b00f5e8ecf" />
+- isolated WAN/LAN networking
+- Linux gateway with IP forwarding and NAT
+- Nginx reverse proxy
+- application services
+- MinIO S3-compatible object storage
+- Kopia encrypted incremental backups
+- Prometheus + Grafana + cAdvisor monitoring
 
-Installation
+## Architecture
 
-Topology
-LAN изолирована (internal: true). Gateway node выполняет роль маршрутизатора, DNS-сервера и Firewall.
-На Docker Desktop полноценный NAT между изолированной сетью и внешней сетью может зависеть от ограничений платформы, поэтому в проекте акцент сделан на архитектуре сети.
+Internet simulation
+|
+mock-internet
+|
+gateway
+/ \
+ WAN LAN
+|
++------+------+
+| | |
+nginx app1 app2
+|
+monitoring
+|
+Prometheus
+|
+Grafana
+|
+cAdvisor
 
-Screenshots
+Backup:
 
-Network Diagram
+Kopia → MinIO (S3)
+|
+kopia-backups
 
-Storage Layer
-Ручная настройка NFS подготовлена. Полный запуск rpc.nfsd требует поддержки NFS Server в ядре Linux, которая отсутствует в моем окружении Docker Desktop + WSL2.
+## Networking
 
-- Manual NFS configuration
-- exports
-- rpcbind
-- rpc.mountd
-- exportfs
-- NFS server requires kernel support (rpc.nfsd)
+LAN: 10.10.10.0/24
 
+gateway: 10.10.10.3
+nginx: 10.10.10.19
+MinIO: 10.10.10.12
+cAdvisor: 10.10.10.30
+Prometheus: 10.10.10.31
+Grafana: 10.10.10.32
 
-Monitoring
+## Monitoring
 
-Backup
+Prometheus collects container metrics from cAdvisor.
+
+Grafana dashboard provides:
+
+- CPU usage
+- RAM usage
+- Network RX
+- Network TX
+
+## Backup
+
+Kopia stores encrypted, deduplicated and chunked backup data
+inside an S3-compatible MinIO repository.
+
+Retention policy:
+
+- hourly: 48
+- daily: 7
+- weekly: 4
+- monthly: 24
+- annual: 3
+
+A restore operation was tested successfully.
+
+## Run
+
+```bash
+docker compose up -d --build
+```

@@ -1,4 +1,4 @@
-.vagrant/
+backups/
 .DS_Store
 *.log
 .env
