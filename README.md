@@ -6,6 +6,42 @@ The project simulates a small private-cloud environment with an isolated LAN, a 
 
 ---
 
+
+## Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone <repository-url>
+cd PrivateCloud
+```
+
+### 2. Create environment configuration
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env` and provide your own credentials.
+
+> `.env` is excluded from Git and should never be committed.
+
+### 3. Start the infrastructure
+
+```bash
+docker compose up -d --build
+```
+
+### 4. Check container status
+
+```bash
+docker compose ps
+```
+
+Infrastructure services should report `healthy` where healthchecks are configured.
+
+---
+
 ## Architecture
 
 ```text
@@ -228,38 +264,6 @@ Secrets are provided through environment variables and are intentionally exclude
 
 ---
 
-## Getting Started
-
-### 1. Clone the repository
-
-```bash
-git clone <repository-url>
-cd PrivateCloud
-```
-
-### 2. Create environment configuration
-
-```bash
-cp .env.example .env
-```
-
-Edit `.env` and provide your own credentials.
-
-> `.env` is excluded from Git and should never be committed.
-
-### 3. Start the infrastructure
-
-```bash
-docker compose up -d --build
-```
-
-### 4. Check container status
-
-```bash
-docker compose ps
-```
-
-Infrastructure services should report `healthy` where healthchecks are configured.
 
 ### 5. Test the applications
 
