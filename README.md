@@ -44,56 +44,7 @@ Infrastructure services should report `healthy` where healthchecks are configure
 
 ## Architecture
 
-```text
-                         ┌──────────────────┐
-                         │  Mock Internet   │
-                         │   nginx:alpine   │
-                         └────────┬─────────┘
-                                  │
-                              WAN network
-                                  │
-                         ┌────────▼─────────┐
-                         │     Gateway      │
-                         │   Linux / NAT    │
-                         │  IP forwarding   │
-                         └────────┬─────────┘
-                                  │
-                       LAN 10.10.10.0/24
-                                  │
-          ┌───────────────────────┼────────────────────────┐
-          │                       │                        │
-    ┌─────▼─────┐           ┌─────▼─────┐           ┌─────▼─────┐
-    │   Nginx   │           │   App 1   │           │   App 2   │
-    │   :9999   │           │  :5678    │           │  :5678    │
-    └───────────┘           └───────────┘           └───────────┘
-
-                         Monitoring
-                              │
-                       ┌──────▼──────┐
-                       │  cAdvisor   │
-                       └──────┬──────┘
-                              │
-                       ┌──────▼──────┐
-                       │ Prometheus  │
-                       └──────┬──────┘
-                              │
-                       ┌──────▼──────┐
-                       │   Grafana   │
-                       └─────────────┘
-
-                         Backup path
-                              │
-                       ┌──────▼──────┐
-                       │    Kopia    │
-                       │  encryption │
-                       │ deduplication│
-                       └──────┬──────┘
-                              │ S3
-                       ┌──────▼──────┐
-                       │    MinIO    │
-                       │ S3 storage  │
-                       └─────────────┘
-```
+<img width="1536" height="1024" alt="Arch" src="https://github.com/user-attachments/assets/bd853d0b-46d0-4c19-a279-0761b9b66120" />
 
 ---
 
