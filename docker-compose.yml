@@ -77,14 +77,14 @@ services:
     container_name: kopia
     restart: unless-stopped
     environment:
-      KOPIA_PASSWORD: "123123123" 
+      KOPIA_PASSWORD: ${KOPIA_PASSWORD}
     command:
       - server
       - start
       - --address=0.0.0.0:51515
       - --insecure
       - --server-username=admin
-      - --server-password=123123123
+      - --server-password=${KOPIA_SERVER_PASSWORD}
     ports:
       - "51515:51515"
     volumes:
@@ -99,8 +99,8 @@ services:
     image: minio/minio
     command: minio server /data --console-address :9001
     environment:
-      - MINIO_ROOT_USER=admin
-      - MINIO_ROOT_PASSWORD=123123123
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
     cap_add:
       - SYS_ADMIN
     networks:
