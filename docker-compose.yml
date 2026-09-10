@@ -133,6 +133,8 @@ services:
     image: grafana/grafana:latest
     volumes:
     - grafana-data:/var/lib/grafana
+    - ./monitoring/grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+    - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro
     networks:
       lan-net:
         ipv4_address: 10.10.10.32
